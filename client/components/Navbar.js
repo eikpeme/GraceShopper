@@ -35,10 +35,7 @@ const Navbar = ({ handleClick, isLoggedIn, userId }) => (
  * CONTAINER
  */
 const mapState = (state) => {
-<<<<<<< HEAD
     //console.log(state.auth);
-=======
->>>>>>> abf6e53ffba376cb284460c15698352d22d3001c
     return {
         userId: state.auth.id,
         isLoggedIn: !!state.auth.id,

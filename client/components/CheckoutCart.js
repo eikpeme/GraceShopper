@@ -3,13 +3,14 @@ import { getCart, removeItem } from "../store/cart";
 import { getProducts } from "../store/allProducts";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 class CheckoutCart extends Component {
   constructor(props) {
     super(props);
-    this.state = { items: [], id: "", products: [] };
+    this.state = { items: [], userId: "", products: [] };
     this.findProduct = this.findProduct.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleCheckout = this.handleCheckout.bind(this);
   }
 
   componentDidMount() {
@@ -22,6 +23,20 @@ class CheckoutCart extends Component {
     if (prevProps !== this.props) {
       this.setState(this.props);
     }
+  }
+
+  async handleCheckout() {
+    //fire checkout thunk??..
+    const id = this.state.userId;
+    // console.log("ist id there??-->", id);
+    // console.log("this.props--->", this.props);
+
+    const token = window.localStorage.getItem("token");
+    await axios.put(`/api/users/${id}/confirmation`, {
+      headers: {
+        authorization: token,
+      },
+    });
   }
 
   handleDelete(id, orderId, productId) {
@@ -64,17 +79,10 @@ class CheckoutCart extends Component {
       <div>
         {/* need to be able to see all items, so map it! */}
 
-<<<<<<< HEAD
         <box className="checkout-div">
           <div className="checkout-items-box">
             <h1 className="title">Shopping items</h1>
             <hr />
-=======
-                <div className="checkout-div">
-                    <div className="checkout-items-box">
-                        <h1 className="title">Shopping items</h1>
-                        <hr />
->>>>>>> abf6e53ffba376cb284460c15698352d22d3001c
 
             {items.length
               ? items.map((item) => {
@@ -116,18 +124,16 @@ class CheckoutCart extends Component {
                       </div>
                       <br />
                     </div>
-<<<<<<< HEAD
                   );
                 })
               : "no item in cart"}
             <hr />
             <div className="checkout">
               <Link to={"/confirmation"}>
-                <button>CONTINUE TO CHECKOUT</button>
+                <button onClick={this.handleCheckout}>
+                  CONTINUE TO CHECKOUT
+                </button>
               </Link>
-=======
-                </div>
->>>>>>> abf6e53ffba376cb284460c15698352d22d3001c
             </div>
           </div>
           <div className="checkout-box">
