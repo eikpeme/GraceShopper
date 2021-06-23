@@ -68,3 +68,10 @@ form div {
   justify-content: center;
   min-width: 70%;
 }
+
+/* confirmation page */
+.confirmation-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
