@@ -20,6 +20,7 @@ class Routes extends Component {
   render() {
     const { isLoggedIn } = this.props;
 
+<<<<<<< HEAD
     return (
       <div>
         {isLoggedIn ? (
@@ -45,6 +46,47 @@ class Routes extends Component {
       </div>
     );
   }
+=======
+        return (
+            <div>
+                {isLoggedIn ? (
+                    <Switch>
+                        <Route path="/home" component={Home} />
+                        <Route
+                            exact
+                            path="/products/:id"
+                            component={SingleProduct}
+                        />
+                        <Route exact path="/products" component={AllProducts} />
+                        <Route
+                            exact
+                            path="/viewCart"
+                            component={CheckoutCart}
+                        />
+                        <Redirect to="/home" />
+                    </Switch>
+                ) : (
+                    <Switch>
+                        <Route path="/" exact component={Login} />
+                        <Route path="/login" component={Login} />
+                        <Route path="/signup" component={Signup} />
+                        <Route
+                            exact
+                            path="/products/:id"
+                            component={SingleProduct}
+                        />
+                        <Route exact path="/products" component={AllProducts} />
+                        <Route
+                            exact
+                            path="/viewCart"
+                            component={CheckoutCart}
+                        />
+                    </Switch>
+                )}
+            </div>
+        );
+    }
+>>>>>>> abf6e53ffba376cb284460c15698352d22d3001c
 }
 
 /**

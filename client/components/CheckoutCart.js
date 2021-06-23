@@ -64,10 +64,17 @@ class CheckoutCart extends Component {
       <div>
         {/* need to be able to see all items, so map it! */}
 
+<<<<<<< HEAD
         <box className="checkout-div">
           <div className="checkout-items-box">
             <h1 className="title">Shopping items</h1>
             <hr />
+=======
+                <div className="checkout-div">
+                    <div className="checkout-items-box">
+                        <h1 className="title">Shopping items</h1>
+                        <hr />
+>>>>>>> abf6e53ffba376cb284460c15698352d22d3001c
 
             {items.length
               ? items.map((item) => {
@@ -109,6 +116,7 @@ class CheckoutCart extends Component {
                       </div>
                       <br />
                     </div>
+<<<<<<< HEAD
                   );
                 })
               : "no item in cart"}
@@ -117,6 +125,9 @@ class CheckoutCart extends Component {
               <Link to={"/confirmation"}>
                 <button>CONTINUE TO CHECKOUT</button>
               </Link>
+=======
+                </div>
+>>>>>>> abf6e53ffba376cb284460c15698352d22d3001c
             </div>
           </div>
           <div className="checkout-box">
