@@ -32,11 +32,16 @@ class CheckoutCart extends Component {
     // console.log("this.props--->", this.props);
 
     const token = window.localStorage.getItem("token");
-    await axios.put(`/api/users/${id}/confirmation`, {
-      headers: {
-        authorization: token,
-      },
-    });
+    console.log(token);
+    //axios.put('endoint', req.body, {header: autorization})
+    await axios.put(
+      `/api/users/${id}/confirmation`,{},
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
   }
 
   handleDelete(id, orderId, productId) {
