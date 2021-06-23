@@ -124,33 +124,12 @@ router.get("/:id/viewCart", requireToken, async (req, res, next) => {
   }
 });
 
+//changes isFulfilled to true after checking out
 //api/users/:id/confirmation
 router.put("/:id/confirmation", async (req, res, next) => {
   try {
     const { id } = req.params;
-    // if (req.user.id == id) {
-    //   const order = await Order.findOne({
-    //     where: {
-    //       userId: id,
-    //       isFulfilled: false,
-    //     },
-    //   });
-
-    //   if (order) {
-    //     await Order.update(
-    //       { isFulfilled: true },
-
-    //       {
-    //         where: {
-    //           userId: id,
-    //           isFulfilled: false,
-    //         },
-    //       }
-    //     );
-    //     res.sendStatus(200);
-    //   }
-    // }
-
+    // if (req.user.id == id) {}
     const order = await Order.findOne({
       where: {
         userId: id,

@@ -58,7 +58,7 @@ class CheckoutCart extends Component {
   render() {
     const { items, products } = this.state;
     const { findProduct } = this;
-    console.log("products-->", products);
+    //console.log("products-->", products);
 
     return (
       <div>
