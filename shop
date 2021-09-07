@@ -1,0 +1,546 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.2
+-- Dumped by pg_dump version 13.2
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: CartItems; Type: TABLE; Schema: public; Owner: Etty
+--
+
+CREATE TABLE public."CartItems" (
+    quantity integer DEFAULT 1,
+    "pastPrice" integer,
+    "currentPrice" integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "orderId" integer NOT NULL,
+    "productId" integer NOT NULL
+);
+
+
+ALTER TABLE public."CartItems" OWNER TO "Etty";
+
+--
+-- Name: carts; Type: TABLE; Schema: public; Owner: Etty
+--
+
+CREATE TABLE public.carts (
+    id integer NOT NULL,
+    total numeric DEFAULT 0,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "userId" integer
+);
+
+
+ALTER TABLE public.carts OWNER TO "Etty";
+
+--
+-- Name: carts_id_seq; Type: SEQUENCE; Schema: public; Owner: Etty
+--
+
+CREATE SEQUENCE public.carts_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.carts_id_seq OWNER TO "Etty";
+
+--
+-- Name: carts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Etty
+--
+
+ALTER SEQUENCE public.carts_id_seq OWNED BY public.carts.id;
+
+
+--
+-- Name: orders; Type: TABLE; Schema: public; Owner: Etty
+--
+
+CREATE TABLE public.orders (
+    id integer NOT NULL,
+    total integer DEFAULT 0,
+    "isFulfilled" boolean DEFAULT false,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "userId" integer
+);
+
+
+ALTER TABLE public.orders OWNER TO "Etty";
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE; Schema: public; Owner: Etty
+--
+
+CREATE SEQUENCE public.orders_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.orders_id_seq OWNER TO "Etty";
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Etty
+--
+
+ALTER SEQUENCE public.orders_id_seq OWNED BY public.orders.id;
+
+
+--
+-- Name: products; Type: TABLE; Schema: public; Owner: Etty
+--
+
+CREATE TABLE public.products (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    description text NOT NULL,
+    price integer NOT NULL,
+    inventory integer DEFAULT 0 NOT NULL,
+    "imageUrl" character varying(255) NOT NULL,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.products OWNER TO "Etty";
+
+--
+-- Name: products_id_seq; Type: SEQUENCE; Schema: public; Owner: Etty
+--
+
+CREATE SEQUENCE public.products_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.products_id_seq OWNER TO "Etty";
+
+--
+-- Name: products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Etty
+--
+
+ALTER SEQUENCE public.products_id_seq OWNED BY public.products.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: Etty
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    username character varying(255) NOT NULL,
+    password character varying(255),
+    email character varying(255) NOT NULL,
+    "isAdmin" boolean DEFAULT false,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO "Etty";
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: Etty
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO "Etty";
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Etty
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: carts id; Type: DEFAULT; Schema: public; Owner: Etty
+--
+
+ALTER TABLE ONLY public.carts ALTER COLUMN id SET DEFAULT nextval('public.carts_id_seq'::regclass);
+
+
+--
+-- Name: orders id; Type: DEFAULT; Schema: public; Owner: Etty
+--
+
+ALTER TABLE ONLY public.orders ALTER COLUMN id SET DEFAULT nextval('public.orders_id_seq'::regclass);
+
+
+--
+-- Name: products id; Type: DEFAULT; Schema: public; Owner: Etty
+--
+
+ALTER TABLE ONLY public.products ALTER COLUMN id SET DEFAULT nextval('public.products_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: Etty
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Data for Name: CartItems; Type: TABLE DATA; Schema: public; Owner: Etty
+--
+
+COPY public."CartItems" (quantity, "pastPrice", "currentPrice", "createdAt", "updatedAt", "orderId", "productId") FROM stdin;
+1	53300	53300	2021-06-23 21:55:19.953-05	2021-06-23 21:55:19.953-05	1	2
+4	33400	33400	2021-06-23 21:55:29.805-05	2021-06-23 21:55:29.805-05	1	4
+1	40700	40700	2021-06-23 21:56:51.353-05	2021-06-23 21:56:51.353-05	51	5
+4	53400	53400	2021-06-23 21:57:01.062-05	2021-06-23 21:57:01.062-05	51	28
+1	45800	45800	2021-06-23 22:30:15.023-05	2021-06-23 22:30:15.023-05	52	1
+1	53300	53300	2021-06-23 22:39:13.893-05	2021-06-23 22:39:13.893-05	53	2
+1	29800	29800	2021-06-23 22:39:21.532-05	2021-06-23 22:39:21.532-05	53	6
+1	53300	53300	2021-06-23 22:39:39.48-05	2021-06-23 22:39:39.48-05	54	2
+1	45800	45800	2021-06-24 10:23:39.657-05	2021-06-24 10:23:39.657-05	55	1
+\.
+
+
+--
+-- Data for Name: carts; Type: TABLE DATA; Schema: public; Owner: Etty
+--
+
+COPY public.carts (id, total, "createdAt", "updatedAt", "userId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: Etty
+--
+
+COPY public.orders (id, total, "isFulfilled", "createdAt", "updatedAt", "userId") FROM stdin;
+2	0	f	2021-06-23 21:54:54.389-05	2021-06-23 21:54:54.389-05	2
+3	0	f	2021-06-23 21:54:54.393-05	2021-06-23 21:54:54.393-05	3
+4	0	f	2021-06-23 21:54:54.398-05	2021-06-23 21:54:54.398-05	4
+5	0	f	2021-06-23 21:54:54.402-05	2021-06-23 21:54:54.402-05	7
+6	0	f	2021-06-23 21:54:54.404-05	2021-06-23 21:54:54.404-05	10
+7	0	f	2021-06-23 21:54:54.406-05	2021-06-23 21:54:54.406-05	8
+8	0	f	2021-06-23 21:54:54.412-05	2021-06-23 21:54:54.412-05	5
+9	0	f	2021-06-23 21:54:54.415-05	2021-06-23 21:54:54.415-05	9
+10	0	f	2021-06-23 21:54:54.419-05	2021-06-23 21:54:54.419-05	6
+11	0	f	2021-06-23 21:54:54.43-05	2021-06-23 21:54:54.43-05	11
+12	0	f	2021-06-23 21:54:54.432-05	2021-06-23 21:54:54.432-05	12
+13	0	f	2021-06-23 21:54:54.434-05	2021-06-23 21:54:54.434-05	13
+14	0	f	2021-06-23 21:54:54.435-05	2021-06-23 21:54:54.435-05	14
+15	0	f	2021-06-23 21:54:54.436-05	2021-06-23 21:54:54.436-05	15
+16	0	f	2021-06-23 21:54:54.438-05	2021-06-23 21:54:54.438-05	17
+17	0	f	2021-06-23 21:54:54.44-05	2021-06-23 21:54:54.44-05	18
+18	0	f	2021-06-23 21:54:54.441-05	2021-06-23 21:54:54.441-05	19
+19	0	f	2021-06-23 21:54:54.442-05	2021-06-23 21:54:54.442-05	16
+20	0	f	2021-06-23 21:54:54.443-05	2021-06-23 21:54:54.443-05	21
+21	0	f	2021-06-23 21:54:54.445-05	2021-06-23 21:54:54.445-05	22
+22	0	f	2021-06-23 21:54:54.446-05	2021-06-23 21:54:54.446-05	23
+23	0	f	2021-06-23 21:54:54.447-05	2021-06-23 21:54:54.447-05	20
+24	0	f	2021-06-23 21:54:54.448-05	2021-06-23 21:54:54.448-05	24
+25	0	f	2021-06-23 21:54:54.452-05	2021-06-23 21:54:54.452-05	25
+26	0	f	2021-06-23 21:54:54.454-05	2021-06-23 21:54:54.454-05	26
+27	0	f	2021-06-23 21:54:54.456-05	2021-06-23 21:54:54.456-05	27
+28	0	f	2021-06-23 21:54:54.457-05	2021-06-23 21:54:54.457-05	28
+29	0	f	2021-06-23 21:54:54.459-05	2021-06-23 21:54:54.459-05	29
+30	0	f	2021-06-23 21:54:54.462-05	2021-06-23 21:54:54.462-05	30
+31	0	f	2021-06-23 21:54:54.466-05	2021-06-23 21:54:54.466-05	31
+32	0	f	2021-06-23 21:54:54.467-05	2021-06-23 21:54:54.467-05	33
+33	0	f	2021-06-23 21:54:54.468-05	2021-06-23 21:54:54.468-05	34
+34	0	f	2021-06-23 21:54:54.468-05	2021-06-23 21:54:54.468-05	35
+35	0	f	2021-06-23 21:54:54.469-05	2021-06-23 21:54:54.469-05	36
+36	0	f	2021-06-23 21:54:54.471-05	2021-06-23 21:54:54.471-05	32
+37	0	f	2021-06-23 21:54:54.473-05	2021-06-23 21:54:54.473-05	37
+38	0	f	2021-06-23 21:54:54.475-05	2021-06-23 21:54:54.475-05	38
+39	0	f	2021-06-23 21:54:54.476-05	2021-06-23 21:54:54.476-05	39
+40	0	f	2021-06-23 21:54:54.477-05	2021-06-23 21:54:54.477-05	40
+41	0	f	2021-06-23 21:54:54.478-05	2021-06-23 21:54:54.478-05	41
+42	0	f	2021-06-23 21:54:54.48-05	2021-06-23 21:54:54.48-05	42
+43	0	f	2021-06-23 21:54:54.481-05	2021-06-23 21:54:54.481-05	43
+44	0	f	2021-06-23 21:54:54.483-05	2021-06-23 21:54:54.483-05	44
+45	0	f	2021-06-23 21:54:54.484-05	2021-06-23 21:54:54.484-05	45
+46	0	f	2021-06-23 21:54:54.485-05	2021-06-23 21:54:54.485-05	46
+47	0	f	2021-06-23 21:54:54.485-05	2021-06-23 21:54:54.485-05	47
+48	0	f	2021-06-23 21:54:54.486-05	2021-06-23 21:54:54.486-05	48
+49	0	f	2021-06-23 21:54:54.488-05	2021-06-23 21:54:54.488-05	49
+50	0	f	2021-06-23 21:54:54.489-05	2021-06-23 21:54:54.489-05	50
+1	1869	t	2021-06-23 21:54:54.387-05	2021-06-23 21:55:47.3-05	1
+51	2543	t	2021-06-23 21:55:47.303-05	2021-06-23 21:57:04.498-05	1
+52	458	t	2021-06-23 21:57:04.5-05	2021-06-23 22:30:21.829-05	1
+53	831	t	2021-06-23 22:30:21.832-05	2021-06-23 22:39:29.821-05	1
+54	533	t	2021-06-23 22:39:29.824-05	2021-06-23 22:39:43.475-05	1
+55	0	t	2021-06-23 22:39:43.478-05	2021-06-24 10:29:49.721-05	1
+56	0	f	2021-06-24 10:29:49.77-05	2021-06-24 10:29:49.77-05	1
+\.
+
+
+--
+-- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: Etty
+--
+
+COPY public.products (id, name, description, price, inventory, "imageUrl", "createdAt", "updatedAt") FROM stdin;
+1	Refined Plastic Computer	Carbonite web goalkeeper gloves are ergonomically designed to give easy fit	45800	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.286-05	2021-06-23 21:54:54.286-05
+2	Sleek Soft Keyboard	The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design	53300	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.287-05	2021-06-23 21:54:54.287-05
+3	Incredible Soft Shirt	New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016	32200	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.287-05	2021-06-23 21:54:54.287-05
+4	Refined Soft Mouse	Carbonite web goalkeeper gloves are ergonomically designed to give easy fit	33400	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.287-05	2021-06-23 21:54:54.287-05
+5	Handcrafted Granite Chicken	Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support	40700	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.287-05	2021-06-23 21:54:54.287-05
+6	Gorgeous Soft Shoes	New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart	29800	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.287-05	2021-06-23 21:54:54.287-05
+7	Generic Cotton Table	The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design	91300	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.287-05	2021-06-23 21:54:54.287-05
+8	Tasty Soft Ball	Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support	75900	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.287-05	2021-06-23 21:54:54.287-05
+9	Handcrafted Metal Soap	The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J	58100	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.288-05	2021-06-23 21:54:54.288-05
+10	Sleek Steel Hat	The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design	73400	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.287-05	2021-06-23 21:54:54.287-05
+11	Ergonomic Metal Chips	The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality	69800	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.288-05	2021-06-23 21:54:54.288-05
+12	Sleek Soft Sausages	Carbonite web goalkeeper gloves are ergonomically designed to give easy fit	63200	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.287-05	2021-06-23 21:54:54.287-05
+14	Sleek Wooden Shirt	The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design	68600	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.288-05	2021-06-23 21:54:54.288-05
+13	Gorgeous Frozen Pizza	The Football Is Good For Training And Recreational Purposes	58400	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.288-05	2021-06-23 21:54:54.288-05
+15	Tasty Soft Bacon	New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart	86300	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.288-05	2021-06-23 21:54:54.288-05
+16	Gorgeous Metal Sausages	Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support	13400	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.288-05	2021-06-23 21:54:54.288-05
+17	Fantastic Fresh Cheese	Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals	54100	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.288-05	2021-06-23 21:54:54.288-05
+18	Fantastic Soft Keyboard	The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients	27600	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.288-05	2021-06-23 21:54:54.288-05
+19	Practical Soft Chair	The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J	35500	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.288-05	2021-06-23 21:54:54.288-05
+20	Unbranded Concrete Hat	The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality	87000	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.288-05	2021-06-23 21:54:54.288-05
+21	Licensed Cotton Tuna	The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive	53000	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.288-05	2021-06-23 21:54:54.288-05
+22	Incredible Wooden Salad	The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design	53300	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.288-05	2021-06-23 21:54:54.288-05
+23	Small Rubber Computer	New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016	32700	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.288-05	2021-06-23 21:54:54.288-05
+24	Sleek Soft Fish	The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J	21000	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.289-05	2021-06-23 21:54:54.289-05
+25	Fantastic Steel Cheese	The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design	51500	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.289-05	2021-06-23 21:54:54.289-05
+26	Ergonomic Wooden Car	The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design	24600	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.289-05	2021-06-23 21:54:54.289-05
+27	Handmade Plastic Fish	New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart	61900	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.289-05	2021-06-23 21:54:54.289-05
+28	Intelligent Fresh Pants	The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design	53400	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.289-05	2021-06-23 21:54:54.289-05
+29	Tasty Concrete Soap	The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J	24300	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.289-05	2021-06-23 21:54:54.289-05
+30	Gorgeous Metal Hat	The Football Is Good For Training And Recreational Purposes	8700	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.289-05	2021-06-23 21:54:54.289-05
+31	Generic Metal Chicken	Carbonite web goalkeeper gloves are ergonomically designed to give easy fit	83400	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.289-05	2021-06-23 21:54:54.289-05
+32	Practical Granite Shirt	New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016	6300	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.29-05	2021-06-23 21:54:54.29-05
+33	Sleek Plastic Salad	The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality	13100	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.29-05	2021-06-23 21:54:54.29-05
+34	Intelligent Wooden Soap	The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive	38400	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.289-05	2021-06-23 21:54:54.289-05
+35	Fantastic Concrete Shirt	New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart	58000	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.29-05	2021-06-23 21:54:54.29-05
+36	Gorgeous Frozen Salad	Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support	75600	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.29-05	2021-06-23 21:54:54.29-05
+41	Practical Concrete Fish	Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support	98600	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.29-05	2021-06-23 21:54:54.29-05
+43	Licensed Steel Sausages	Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles	73500	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.29-05	2021-06-23 21:54:54.29-05
+47	Gorgeous Plastic Sausages	Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals	21100	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.291-05	2021-06-23 21:54:54.291-05
+37	Tasty Frozen Table	New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016	51700	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.29-05	2021-06-23 21:54:54.29-05
+42	Small Rubber Keyboard	New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016	97700	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.29-05	2021-06-23 21:54:54.29-05
+50	Licensed Concrete Chicken	Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support	31300	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.291-05	2021-06-23 21:54:54.291-05
+38	Rustic Fresh Bike	New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart	32200	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.29-05	2021-06-23 21:54:54.29-05
+44	Handmade Granite Hat	Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support	800	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.29-05	2021-06-23 21:54:54.29-05
+48	Fantastic Cotton Mouse	New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016	7500	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.291-05	2021-06-23 21:54:54.291-05
+39	Unbranded Soft Shoes	New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016	6400	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.29-05	2021-06-23 21:54:54.29-05
+45	Practical Steel Gloves	New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016	64100	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.29-05	2021-06-23 21:54:54.29-05
+49	Unbranded Fresh Shirt	New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart	99800	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.291-05	2021-06-23 21:54:54.291-05
+40	Incredible Soft Chips	The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients	67200	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.29-05	2021-06-23 21:54:54.29-05
+46	Gorgeous Plastic Chair	New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016	79900	0	http://placeimg.com/640/480/food	2021-06-23 21:54:54.291-05	2021-06-23 21:54:54.291-05
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: Etty
+--
+
+COPY public.users (id, username, password, email, "isAdmin", "createdAt", "updatedAt") FROM stdin;
+1	Junius72	$2b$05$Gapd2lbsIsdvEPeBcrLO/OqtKWY/.V9zRR100Kes.r6KQtFH8Bcqu	Arjun13@gmail.com	f	2021-06-23 21:54:54.359-05	2021-06-23 21:54:54.359-05
+2	Patience.Wuckert49	$2b$05$87ZzarGzFu5F.8UWETwM3.9Wk6pGjGyKEOdmMgLNTdLfdCqi1JhXK	Magdalena.Schamberger@gmail.com	f	2021-06-23 21:54:54.359-05	2021-06-23 21:54:54.359-05
+3	Raven_Mayer	$2b$05$ot6fJvE5xfUv0yUmMVOwWO42eIMq5nPPOyU4MC9md.yTZhlhmWn/q	Loy.Frami@hotmail.com	f	2021-06-23 21:54:54.359-05	2021-06-23 21:54:54.359-05
+4	Alison_Leffler25	$2b$05$7CZUrhesHzToa0Y4gGLX3.nhAf6TYtFvM.tyShHbBggqYbJPuHs8C	Zelma.Strosin@hotmail.com	f	2021-06-23 21:54:54.359-05	2021-06-23 21:54:54.359-05
+5	Jazmin45	$2b$05$/D/buc2Kv7tI0FUXFJcDqeNI/22CeRA361sBG1C2IvNnDZwAtFwnC	Adolphus_West34@yahoo.com	f	2021-06-23 21:54:54.359-05	2021-06-23 21:54:54.359-05
+6	Bradford_Cruickshank10	$2b$05$CK5wIpDVsuQVaEfYHq587Oid3fLjz3VYv69wNMbpW3auHJjIy8TzW	Mandy_Herman0@gmail.com	f	2021-06-23 21:54:54.359-05	2021-06-23 21:54:54.359-05
+7	Fabian.Gottlieb49	$2b$05$RLJqTnJ4b34GAY2BS9gvl.6dvI8OBkv28y5WW0pLe4X4Rlyc7ls52	Avis.Cole@yahoo.com	f	2021-06-23 21:54:54.359-05	2021-06-23 21:54:54.359-05
+8	Alvah.Dietrich	$2b$05$CA6d9RwqjQj7MXy3QITfqudnuBGeiqt9qg788fszRhbqCB//q6H6e	Ruth.Klein44@yahoo.com	f	2021-06-23 21:54:54.359-05	2021-06-23 21:54:54.359-05
+9	Maida53	$2b$05$V.esIFOH/OZxB31VnGA7oeyZlb01ndoufUzgIKH/d4OFEqXgjYxLW	Lilly_Wolff@hotmail.com	f	2021-06-23 21:54:54.359-05	2021-06-23 21:54:54.359-05
+10	Joelle63	$2b$05$q0KPbAksUI2SVldv2HRAcu3UVLxPNk8Ng6K.uYHWzlv35L3dyIBpi	Hilma.Barton@hotmail.com	f	2021-06-23 21:54:54.359-05	2021-06-23 21:54:54.359-05
+11	Bo.Runolfsson	$2b$05$sD0AClLbZtKbUzGTdD9zY.CSzd0.zwGJ.rlUPQ/VgRcCoVomTtBIm	Bertram_Lindgren@hotmail.com	f	2021-06-23 21:54:54.359-05	2021-06-23 21:54:54.359-05
+12	Jeramie_Swaniawski	$2b$05$JJ.DBJgS.qQk3ImNTsRMYenmBnNCB1tNrO6m6zGAlFC4F78C/U08m	Alessandro.Mayert74@gmail.com	f	2021-06-23 21:54:54.359-05	2021-06-23 21:54:54.359-05
+13	Magnolia57	$2b$05$/Nr01Mdl9FfuL02Z0bLKOepL3igaObIO.oxHdApUqFmbnM3u6yfbW	Mina.Veum@yahoo.com	f	2021-06-23 21:54:54.359-05	2021-06-23 21:54:54.359-05
+14	Citlalli_Steuber32	$2b$05$VtWxvL2LqFAw0NOxaiwKge.WHXiA37nuPgK5/cgxytR96oKX8FJQq	Rocio91@gmail.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+15	Anjali.Rath10	$2b$05$08ijZiNvx21xvGmThz/ifut481BZoPqDMsJp25XNWNmL688dGSbwm	Freeda60@gmail.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+16	Chandler36	$2b$05$wWsga3eLIq3teWhB0oJvZO1tMU0hSvrAf5Szn0sBrN.5OtZKI5dfG	Carlo_Klocko@yahoo.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+17	Akeem29	$2b$05$J236M8Md/2qlvr7GrQYhFetDNAmYZFzI8bYRhfOKgDUV5Ure/MGaa	Rudy43@yahoo.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+18	Gillian.Balistreri45	$2b$05$JdRLCVSBLMWdDrSuDfE8D.XKOz2NXo6.QnmwYhd49Z6qe44uOmhtK	Ervin.Christiansen@yahoo.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+19	Oran_Hirthe	$2b$05$p57L3n2HnCCpRCv0BdhdQuphWrI0msYqUVO2PBSBXcwen4z2d1FS6	Erich39@yahoo.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+20	Alta.Ebert	$2b$05$j6VZO93cdXPrx4.ntKUIrObsd70E24CdQgVzbLfpkh4/wmd/EsFp.	Darion20@gmail.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+21	Juston.Bogan70	$2b$05$u/xpK5aTVWjBmCTb4ZtHg.SJVZb0PLwU0MUB0Bg4o497d3ouEZiIm	Michaela.Streich@gmail.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+22	Rey.Mayert	$2b$05$bQzOqMEgRIWbxl6bmP07WOu/jUaL7mKnqVSyNXaWD.pjN2b4K3IWe	Daniela82@gmail.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+23	Greg86	$2b$05$l3y8K.RbbVBvu2wSld56O.Yhfg7qaZtp5Eibi74L0N4SJMkirQOgm	Ansley.OConner46@hotmail.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+24	Rosemary.Rodriguez32	$2b$05$EIE3yNGi/W/fs/lq6rwnuOYhRG6Od/3hiXQTiaEtFKo6c8xkI/rX.	Laurianne69@hotmail.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+25	Hunter_Grant	$2b$05$PVcdBgDizi5N7OK9ogYpRuw7ePnUbQhSVZRGJdScKC4V.BHmqT2Su	Barry50@yahoo.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+26	Antonina_Koepp41	$2b$05$zLuHtlLdePk.d3KVJfSUAuAOoLjKrrSGHvQvTiiy46rsafT6ih59m	Dawson_Schowalter41@yahoo.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+27	Juliet_Bernhard	$2b$05$6WRmLKTuIBGXpdjpTS6ZnObvKgFiiITrcAlQ921jLBbt9Hzth2OqK	Zora35@yahoo.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+28	Joanie.Kohler	$2b$05$E2I8Jo3deC8R9Mf4xyiGpeN.i5U5Zb9zXHACYw4/US2WhHndASRJq	Karl.Harber71@yahoo.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+29	Braeden91	$2b$05$Pj7CBsYVZJcQeUad1AO6b./iXo48NxMNEp4alluZfTFCkrneC8UfO	Amos_Morar@gmail.com	f	2021-06-23 21:54:54.36-05	2021-06-23 21:54:54.36-05
+30	Vladimir_Anderson	$2b$05$v4WjfzwCCf4mK0LLp8t1d.fesBm2JCXbD19IaC3dgtC57.yuo884q	Xander.Crooks11@gmail.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+31	Gisselle_Hammes	$2b$05$3N85IMjntT6yK781lh7.W.TTgFB0UFTcwUpQaah1fN8wb6BtqN5OS	Stefanie.Muller@gmail.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+32	Alberta_Collier	$2b$05$3387zqU.NuEJMiULy0Iv3et.DX8LV5l33bch8q5WFWTFwc6mFjtn6	Elsie30@yahoo.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+33	Anibal.Durgan	$2b$05$vwpbV8RJwVcjSpRrtD5B3eMp1dXz96XiwK8LzxktzRj2G0VK/0JOu	Norris_Stoltenberg32@hotmail.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+34	Lolita11	$2b$05$8EoaEyhcZZ0cosmyf1I1m.KRo3diwW3VhQezANZIr9gOI.tDo/Ieq	Gerardo55@yahoo.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+35	Kenyon.Schmitt	$2b$05$Y.A842m24k4Nb3XdCKt9.e4IgQoDFmjGddnWh6E8L6b0s.WtGdzzq	Jonas_Medhurst@hotmail.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+36	Zoe_Barrows	$2b$05$HvPTRJQxFn0WxlapDr4NT.QMPFPws6UIzIt5Zj.s8qT4Yq4MBurOa	Rhett48@yahoo.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+37	Abraham.Gerhold	$2b$05$/6Y.QYkYR4Dn2l6UEndl2ePkKHL3iLzNIZmCr6AwkanPsauTkhyO.	Connie_Mann@gmail.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+38	Cornelius_Dicki	$2b$05$JbuamoSoCwZdJyml.0ivNeH9Yw7jfvr4PhrZPbyxfgPjEamuZhXC6	Zoey.Block45@yahoo.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+39	Kathryn43	$2b$05$W0kqLWQ0MMDvDflbMHCTo.YNShulBQsCi.YlNHB7ctLnlb2PT5j6K	Murphy19@gmail.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+40	Richard.Yost	$2b$05$bEq5MPjQVdYwwLzgQjtytOIxuiURIdFECeeXps41iUK2yGj6tY18q	Laura_Nitzsche50@hotmail.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+41	Jewell.Grimes71	$2b$05$WhlW7ugNxsAosztUFRE1Z.lAQlSVLeZokLrBVsfah0CIbn/iX0qje	Clay.Schimmel15@yahoo.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+42	Ursula_Shields45	$2b$05$Qm7IUSGFHb8ofaJIVwq4/uGwfk1k.U22naZZ8MD.omakgS.iGcQMe	Danika_Hilll20@yahoo.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+43	Vesta78	$2b$05$K1TcM4BQejw7Do1qY/audufWaqtw9WTD/hxVBEUOEyalp4Rohz5b2	Bernadine.McLaughlin26@yahoo.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+44	Kurtis_Aufderhar79	$2b$05$nbXoTg7CDC11I73DZYZ.Ge7I0aTF6yGktILpnr2MqozncK4.5auJe	Thelma.Upton71@hotmail.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+45	Leif.OReilly	$2b$05$ClzoeIy300KKaIOZzzjIPODOetcYZXcTMiX/v6JPHNNICc5e1J3lO	Julien_White81@gmail.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+46	Bradly_OKeefe8	$2b$05$3gbt7125BZqtEvrJcq6bLuEscEqsaL5O6m4bBfZ2/Ue0iWzI3AuUG	Lenna69@gmail.com	f	2021-06-23 21:54:54.361-05	2021-06-23 21:54:54.361-05
+47	Abel41	$2b$05$e99aNLqGfPrf.5YX8XZIs.eLO5gj/yEYHxNG8LPLPLDRqIarE6O/G	Richie_Lockman@hotmail.com	f	2021-06-23 21:54:54.362-05	2021-06-23 21:54:54.362-05
+48	Jerrold.Luettgen	$2b$05$rk9QteBNafMjqJ6BA0JCL.iEPAhBPN.bxhwyPixDQ3gtO2FhB2PEu	Kurt_Fritsch@yahoo.com	f	2021-06-23 21:54:54.362-05	2021-06-23 21:54:54.362-05
+49	Evan.Gutmann	$2b$05$10tZMqAkw70jnXHGZT2gBugtxsN2q4M9XzuETb/DmRnzIqVa3gsa.	Jensen.Wiza49@gmail.com	f	2021-06-23 21:54:54.362-05	2021-06-23 21:54:54.362-05
+50	Julianne66	$2b$05$AnC3v9.CP.k7Oe8UmFrZYecxH4MNTUnp/yyT2HWbaCI8s/9Y8ecHq	Travis_Runolfsdottir@yahoo.com	f	2021-06-23 21:54:54.362-05	2021-06-23 21:54:54.362-05
+\.
+
+
+--
+-- Name: carts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Etty
+--
+
+SELECT pg_catalog.setval('public.carts_id_seq', 1, false);
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Etty
+--
+
+SELECT pg_catalog.setval('public.orders_id_seq', 56, true);
+
+
+--
+-- Name: products_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Etty
+--
+
+SELECT pg_catalog.setval('public.products_id_seq', 50, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Etty
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 50, true);
+
+
+--
+-- Name: CartItems CartItems_pkey; Type: CONSTRAINT; Schema: public; Owner: Etty
+--
+
+ALTER TABLE ONLY public."CartItems"
+    ADD CONSTRAINT "CartItems_pkey" PRIMARY KEY ("orderId", "productId");
+
+
+--
+-- Name: carts carts_pkey; Type: CONSTRAINT; Schema: public; Owner: Etty
+--
+
+ALTER TABLE ONLY public.carts
+    ADD CONSTRAINT carts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: Etty
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: products products_name_key; Type: CONSTRAINT; Schema: public; Owner: Etty
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT products_name_key UNIQUE (name);
+
+
+--
+-- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: Etty
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT products_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: Etty
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: Etty
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: Etty
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_username_key UNIQUE (username);
+
+
+--
+-- Name: CartItems CartItems_orderId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: Etty
+--
+
+ALTER TABLE ONLY public."CartItems"
+    ADD CONSTRAINT "CartItems_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES public.orders(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: CartItems CartItems_productId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: Etty
+--
+
+ALTER TABLE ONLY public."CartItems"
+    ADD CONSTRAINT "CartItems_productId_fkey" FOREIGN KEY ("productId") REFERENCES public.products(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: orders orders_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: Etty
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT "orders_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
