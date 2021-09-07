@@ -20,4 +20,3 @@ See setting up postgres on local machine: https://www.prisma.io/dataguide/postgr
 ### Heroku
 
 https://grayce-shoppa.herokuapp.com/
-git
